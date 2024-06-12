@@ -1,4 +1,4 @@
-module geometry
+module github.com/Supkaa/geometry
 
 go 1.22.4
 

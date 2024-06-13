@@ -9,6 +9,7 @@ import (
 	"github.com/paulmach/orb/geo"
 	"github.com/paulmach/orb/geojson"
 	"github.com/paulmach/orb/planar"
+	"reflect"
 	"slices"
 )
 
@@ -108,6 +109,22 @@ func NewPolygonFromOrb(orbPolygon orb.Geometry) (Polygon, error) {
 
 func NewPolygonFromGeoJSON() {
 
+}
+
+func NewPolygonFromPlanarPoints(points []point) (Polygon, error) {
+	ring := orb.Ring{}
+
+	for _, p := range points {
+		ring = append(ring, p.Point)
+	}
+
+	if !reflect.DeepEqual(points[0], points[len(points)-1]) {
+		ring = append(ring, points[0].Point)
+	}
+
+	poly := orb.Polygon{ring}
+
+	return NewPolygonFromOrb(poly)
 }
 
 type polygon struct {

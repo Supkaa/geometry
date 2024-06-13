@@ -111,15 +111,15 @@ func NewPolygonFromGeoJSON() {
 
 }
 
-func NewPolygonFromPlanarPoints(points []point) (Polygon, error) {
+func NewPolygonFromPlanarPoints(points []Point) (Polygon, error) {
 	ring := orb.Ring{}
 
 	for _, p := range points {
-		ring = append(ring, p.Point)
+		ring = append(ring, orb.Point{p.Lon(), p.Lat()})
 	}
 
 	if !reflect.DeepEqual(points[0], points[len(points)-1]) {
-		ring = append(ring, points[0].Point)
+		ring = append(ring, orb.Point{points[0].Lon(), points[0].Lat()})
 	}
 
 	poly := orb.Polygon{ring}
